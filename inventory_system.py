@@ -18,6 +18,17 @@ class Product:
     def __str__(self):
         return f"{self.name} - ${self.price} (Available: {self.quantity})"
 
-    def update_price(new_price):
-	 
+    def update_price(self, new_price):
+        new_price.validate_data(new_price):
+            self.price = new_price
+
+    def update_quantity(self, new_quantity):
+        new_quantity.validate_data(new_quantity):
+            self.quantity = new_quantity
+
+    def calculate_total_value(self):
+        return self.price * self.quantity
+
+
+
 
