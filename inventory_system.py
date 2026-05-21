@@ -106,7 +106,7 @@ def main_menu(inventory):
                 inventory.remove_product(name)
                 print(f"Product '{name}' removed successfully.")
             except ProductNotFoundError as e:
-                    print(f"Product '{name}' not found in the inventory.")
+                print(e)
 
         elif choice == '3':
             try:
@@ -114,7 +114,7 @@ def main_menu(inventory):
                 product = inventory.search_product(name)
                 print(product)
             except ProductNotFoundError as e:
-                print(f"Product '{name}' not found in the inventory.")
+                print(e)
 
         elif choice == '4':
             if not inventory.products:
