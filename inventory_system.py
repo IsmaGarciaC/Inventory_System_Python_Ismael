@@ -52,14 +52,14 @@ class Inventory:
             if product.name == name:
                 del self.products[i]
                 return True
-        return False
+        raise ProductNotFoundError(f"Product '{name}' not found.") 
 
     def search_product(self, name):
         # Get a product by its name
         for product in self.products:
             if product.name == name:
                 return product
-        return None
+        raise ProductNotFoundError(f"Product '{name}' not found.") 
 
     def list_products(self):
         # List all products in the inventory
@@ -71,6 +71,9 @@ class Inventory:
         for product in self.products:
             total_value += product.calculate_total_value()
         return total_value
+
+class ProductNotFoundError(Exception):
+        pass
 
 def main_menu(inventory):
     while True:
@@ -98,22 +101,26 @@ def main_menu(inventory):
                 print(f"Error: {e}")
 
         elif choice == '2':
-            name = input("Product Name to Remove: ")
-            if inventory.remove_product(name):
+            try:
+                name = input("Product Name to Remove: ")
+                inventory.remove_product(name)
                 print(f"Product '{name}' removed successfully.")
-            else:
-                print(f"Product '{name}' not found in the inventory.")
+            except ProductNotFoundError as e:
+                    print(f"Product '{name}' not found in the inventory.")
 
         elif choice == '3':
-            name = input("Product Name to Search: ")
-            product = inventory.search_product(name)
-            if product:
+            try:
+                name = input("Product Name to Search: ")
+                product = inventory.search_product(name)
                 print(product)
-            else:
+            except ProductNotFoundError as e:
                 print(f"Product '{name}' not found in the inventory.")
 
         elif choice == '4':
-            inventory.list_products()
+            if not inventory.products:
+                print("Inventory is empty.")
+            else:
+                inventory.list_products()
 
         elif choice == '5':
             total_value = inventory.calculate_inventory_value()
