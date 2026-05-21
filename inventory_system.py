@@ -72,4 +72,60 @@ class Inventory:
             total_value += product.calculate_total_value()
         return total_value
 
+def main_menu(inventory):
+    while True:
+        print("Inventory Management System")
+        print("-"*30)
+        print("1. Add Product")
+        print("2. Remove Product")
+        print("3. Search Product")
+        print("4. List Products")
+        print("5. Calculate Inventory Value")
+        print("6. Exit")
+        print("-"*30)
 
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            try:
+                name = input("Product Name: ")
+                price = float(input("Price: "))
+                quantity = int(input("Quantity: "))
+                product = Product(name, price, quantity)
+                inventory.add_product(product)
+                print(f"Product '{name}' added successfully.")
+            except ValueError as e:
+                print(f"Error: {e}")
+
+        elif choice == '2':
+            name = input("Product Name to Remove: ")
+            if inventory.remove_product(name):
+                print(f"Product '{name}' removed successfully.")
+            else:
+                print(f"Product '{name}' not found in the inventory.")
+
+        elif choice == '3':
+            name = input("Product Name to Search: ")
+            product = inventory.search_product(name)
+            if product:
+                print(product)
+            else:
+                print(f"Product '{name}' not found in the inventory.")
+
+        elif choice == '4':
+            inventory.list_products()
+
+        elif choice == '5':
+            total_value = inventory.calculate_inventory_value()
+            print(f"Total Inventory Value: ${total_value:.2f}")
+
+        elif choice == '6':
+            print("Exiting the program.")
+            break
+
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    inventory = Inventory()
+    main_menu(inventory)
