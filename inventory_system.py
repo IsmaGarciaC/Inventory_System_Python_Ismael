@@ -9,7 +9,7 @@ class Product:
         self.quantity = quantity
 
     def validate_data(self, name, price, quantity):
-        if not isinstance(name, str) or not isinstance(price, float) or not isinstance(quantity, int):
+        if not isinstance(name, str) or not isinstance(price, (int, float)) or not isinstance(quantity, int):
             raise ValueError("Invalid input types. Name should be a string, price should be a float, and quantity should be an integer.")
         if name == "":
             raise ValueError("The product name cannot be empty.")
